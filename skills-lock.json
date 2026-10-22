@@ -19,6 +19,12 @@
       "skillPath": "skills/find-skills/SKILL.md",
       "computedHash": "b146008599c31057cef1c145774cea5d5afb30e8f43fa802e47a4b461419aaaf"
     },
+    "git-workflow-and-versioning": {
+      "source": "addyosmani/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/git-workflow-and-versioning/SKILL.md",
+      "computedHash": "e8e0d1cc98c0a6b81d2979442ae92addae32cd5194fb5c4eac4ac5228b408770"
+    },
     "grill-me": {
       "source": "mattpocock/skills",
       "sourceType": "github",
@@ -48,6 +54,12 @@
       "sourceType": "github",
       "skillPath": "skills/hyperframes-registry/SKILL.md",
       "computedHash": "1acf359546af75f92fdcfa7fe685d53f0e85a121f145a4b90f8e4d9e763b8990"
+    },
+    "java-coding-standards": {
+      "source": "affaan-m/ecc",
+      "sourceType": "github",
+      "skillPath": "skills/java-coding-standards/SKILL.md",
+      "computedHash": "c45cf8f0b87d44804e582fe0d103e154214961bcae4c5e1cb473d2f20d529096"
     },
     "media-use": {
       "source": "heygen-com/hyperframes",

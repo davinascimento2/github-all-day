@@ -1,0 +1,58 @@
+name: GitHub All Day - Daily Pulse Automation
+
+on:
+  schedule:
+    # Runs everyday at 12:00 UTC (9:00 AM BRT)
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java 21 LTS
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build AllDay Suite
+        run: |
+          mkdir -p target/classes
+          javac -d target/classes $(find src/main/java -name "*.java")
+          jar --create --file target/allday.jar --main-class com.allday.Main -C target/classes .
+
+      - name: Run GitPulse & Record Daily Metrics
+        run: |
+          mkdir -p stats
+          DATE=$(date -u +"%Y-%m-%d")
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          # Run SysPulse and capture JSON
+          java -jar target/allday.jar syspulse --json > "stats/syspulse-${DATE}.json"
+          
+          # Append to activity ledger
+          echo "{\"date\":\"${DATE}\",\"timestamp\":\"${TIMESTAMP}\",\"status\":\"active\"}" >> stats/activity-ledger.jsonl
+          
+          # Update dynamic daily badge in README
+          sed -i -E "s/<!-- LAST_PULSE_START -->.*<!-- LAST_PULSE_END -->/<!-- LAST_PULSE_START -->⭐ Last Active Pulse: \`${DATE} ${TIMESTAMP}\` <!-- LAST_PULSE_END -->/" README.md || true
+
+      - name: Commit and Push Daily Activity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add stats/ README.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore(pulse): automated daily activity record [skip ci]"
+            git push
+          fi

@@ -1,0 +1,33 @@
+name: CI Build & Test
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21 LTS
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compile and Package AllDay Suite
+        run: |
+          mkdir -p target/classes
+          javac -d target/classes $(find src/main/java -name "*.java")
+          jar --create --file target/allday.jar --main-class com.allday.Main -C target/classes .
+
+      - name: Run Test Suite
+        run: |
+          java -jar target/allday.jar help
+          java -jar target/allday.jar cronparser "*/15 * * * *"
+          java -jar target/allday.jar syspulse --json

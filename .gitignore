@@ -1,0 +1,10 @@
+target/
+*.class
+*.jar
+*.vault
+*.decrypted
+stats/*.json
+!stats/.gitkeep
+.idea/
+*.iml
+.vscode/
