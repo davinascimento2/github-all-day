@@ -1,0 +1,35 @@
+name: CI Build & Test
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  schedule:
+    # Daily run at 12:00 UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21 LTS
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compile and Package VectorCore JAR
+        run: |
+          mkdir -p target/classes
+          javac -d target/classes $(find src/main/java -name "*.java")
+          jar --create --file target/vectorcore.jar --main-class com.vectorcore.VectorCoreApp -C target/classes .
+
+      - name: Execute In-Memory Benchmark
+        run: |
+          java -jar target/vectorcore.jar demo
+          java -jar target/vectorcore.jar benchmark 1000 16

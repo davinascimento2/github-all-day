@@ -1,4 +1,4 @@
-# 🚀 GitHub All Day - Ecossistema de Ferramentas Java Funcionais
+# 🚀 GitHub All Day - Ecossistema de Ferramentas & Flagship AI Engine
 
 [![Java 21](https://img.shields.io/badge/Java-21%20LTS-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Status](https://img.shields.io/badge/Activity-Daily%20Pulse%20Automated-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/daily-pulse.yml)
@@ -7,7 +7,21 @@
 
 <!-- LAST_PULSE_START -->⭐ Last Active Pulse: `2026-10-22 16:10:00Z` <!-- LAST_PULSE_END -->
 
-Este repositório atua como o **guarda-chuva (suite principal)** de um ecossistema com **10 ferramentas utilitárias funcionais independentes para desenvolvedores**, construídas em **Java 21 LTS** sem dependências de terceiros, cada uma com seu próprio repositório público, pipeline de CI/CD e automação de atividade no GitHub.
+Este ecossistema reúne um **motor emblemático de Inteligência Artificial / Vector Database** e uma suíte completa de **10 ferramentas utilitárias funcionais para desenvolvedores**, construídas em **Java 21 LTS** puro (sem dependências externas) com pipelines de CI/CD automatizados.
+
+---
+
+## ⚡ Flagship Project: [VectorCore Engine](./vectorcore)
+Um banco de dados vetorial em memória ultra-rápido para **RAG (Retrieval-Augmented Generation)**:
+- **Navegação HNSW Multi-Camadas**: Busca aproximada (ANN) em $\mathcal{O}(\log N)$ com mais de **4.100 QPS** e **99.5% de recall**.
+- **Busca Híbrida com BM25**: Combina embeddings semânticos densos com palavras-chave exatas via **Reciprocal Rank Fusion (RRF)**.
+- **Dashboard Web & REST API**: Interface visual dark-mode embutida na porta 8080 (`com.sun.net.httpserver` com Virtual Threads).
+- **Persistência Binária Ultra-Rápida**: Snapshots compactos em disco.
+
+```bash
+# Executar o VectorCore Dashboard
+java -jar vectorcore/target/vectorcore.jar server 8080
+```
 
 ---
 
